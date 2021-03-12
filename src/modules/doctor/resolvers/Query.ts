@@ -1,10 +1,10 @@
-const QueryResolver = {
+import { DoctorProvider } from '../providers';
+import { DoctorModule } from '../types';
+
+const QueryResolver: DoctorModule.Resolvers = {
   Query: {
-    doctor() {
-      return {
-        id: 'doctorId',
-        name: 'doctorName',
-      };
+    doctor(_, { id }, { injector }: GraphQLModules.Context) {
+      return injector.get(DoctorProvider).getDoctor(id)!;
     },
   },
 };

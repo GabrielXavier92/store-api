@@ -1,8 +1,9 @@
 import { createModule } from 'graphql-modules';
 
 import middlewares from './middlewares';
-import resolvers from './resolvers';
 import * as types from './typedefs/types.graphql';
+import resolvers from './resolvers';
+import { DoctorProvider } from './providers';
 
 const DoctorModule = createModule({
   id: 'DoctorModule',
@@ -10,6 +11,7 @@ const DoctorModule = createModule({
   middlewares,
   typeDefs: [types],
   resolvers,
+  providers: [DoctorProvider],
 });
 
 export default DoctorModule;

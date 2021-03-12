@@ -1,9 +1,12 @@
-const QueryResolver = {
+import { SpecialtyModule } from '../types';
+
+const QueryResolver: SpecialtyModule.Resolvers = {
   Query: {
-    specialty(_: any, __: any, context: GraphQLModules.Context) {
+    specialty(_, { id }, context: GraphQLModules.Context) {
+      console.log(context.moduleId);
       return {
-        id: context.user?.id,
-        name: context.user?.name,
+        id,
+        name: 'specialty',
       };
     },
   },
