@@ -7,5 +7,6 @@ module.exports = {
     'import/extensions': 0,
     'max-len': [2, 130, 4, { ignoreUrls: true }],
     'no-underscore-dangle': 'off',
+    'implicit-arrow-linebreak': 'off',
   },
 };
