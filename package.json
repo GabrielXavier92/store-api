@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "NODE_ENV=development nodemon --exec ts-node --files src/index.ts",
+    "codegen": "yarn graphql-codegen",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
