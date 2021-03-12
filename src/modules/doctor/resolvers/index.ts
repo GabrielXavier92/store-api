@@ -1,2 +1,5 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as QueryResolver } from './Query';
+import QueryResolver from './Query';
+
+export default {
+  ...QueryResolver,
+};

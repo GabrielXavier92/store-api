@@ -1,19 +1,15 @@
 import { createModule } from 'graphql-modules';
 
-import { QueryMiddleware } from './middlewares';
-import { QueryResolver } from './resolvers';
-import typeDefs from './typeDefs';
+import middlewares from './middlewares';
+import resolvers from './resolvers';
+import * as types from './typedefs/types.graphql';
 
 const DoctorModule = createModule({
   id: 'DoctorModule',
   dirname: __dirname,
-  middlewares: {
-    ...QueryMiddleware,
-  },
-  typeDefs,
-  resolvers: {
-    ...QueryResolver,
-  },
+  middlewares,
+  typeDefs: [types],
+  resolvers,
 });
 
 export default DoctorModule;

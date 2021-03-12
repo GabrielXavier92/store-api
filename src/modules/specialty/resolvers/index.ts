@@ -1,2 +1,7 @@
-export { default as QueryResolver } from './Query';
-export { default as DoctorResolver } from './Doctor';
+import QueryResolver from './Query';
+import DoctorResolver from './Doctor';
+
+export default {
+  ...QueryResolver,
+  ...DoctorResolver,
+};

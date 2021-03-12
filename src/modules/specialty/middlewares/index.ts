@@ -1,2 +1,5 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as QueryMiddleware } from './Query';
+import QueryMiddleware from './Query';
+
+export default {
+  ...QueryMiddleware,
+};

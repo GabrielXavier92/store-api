@@ -1,0 +1,8 @@
+type Query {
+  doctor(id: ID!): Doctor
+}
+
+type Doctor {
+  id: ID!
+  name: String!
+}
