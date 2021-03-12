@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import 'graphql-import-node';
 
 import { createApplication } from 'graphql-modules';
 import { ApolloServer } from 'apollo-server';
