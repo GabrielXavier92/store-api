@@ -1,18 +1,10 @@
 import 'reflect-metadata';
 import 'graphql-import-node';
 
-import { createApplication } from 'graphql-modules';
 import { ApolloServer } from 'apollo-server';
 
-import DoctorModule from './modules/doctor';
-import AuthModule from './modules/auth';
-import Specialty from './modules/specialty';
-
+import application from './modules';
 import createContext from './context';
-
-const application = createApplication({
-  modules: [DoctorModule, Specialty, AuthModule],
-});
 
 const schema = application.createSchemaForApollo();
 
