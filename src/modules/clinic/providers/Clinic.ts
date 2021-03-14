@@ -20,9 +20,9 @@ export class ClinicProvider {
   ];
 
   getClinic(id: string): ClinicModule.Clinic {
-    const clinic = this.clinics.find((clinic) => clinic.id === id);
-    if (!clinic) throw new UserInputError('Unnable to find clinic');
-    return clinic;
+    const findClinic = this.clinics.find((clinic) => clinic.id === id);
+    if (!findClinic) throw new UserInputError('Unnable to find clinic');
+    return findClinic;
   }
 
   getClinics(): ClinicModule.Clinic[] {
