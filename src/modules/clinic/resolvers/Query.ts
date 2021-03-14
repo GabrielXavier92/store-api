@@ -1,10 +1,14 @@
-// import { DoctorProvider } from '../providers';
+import { ClinicProvider } from '../providers';
 import { ClinicModule } from '../types';
 
 const QueryResolver: ClinicModule.Resolvers = {
   Query: {
-    clinic() {},
-    clinics() {},
+    clinic(_, { id }, { injector }: GraphQLModules.Context) {
+      return injector.get(ClinicProvider).getClinic(id);
+    },
+    clinics(_, __, { injector }: GraphQLModules.Context) {
+      return injector.get(ClinicProvider).getClinics();
+    },
   },
 };
 export default QueryResolver;
