@@ -52,7 +52,7 @@ export class ClinicProvider {
   deleteClinic(id: string): boolean {
     const clinicIndex = this.clinics.findIndex((clinic) => clinic.id === id)!;
     if (!clinicIndex) throw new UserInputError('Unnable to delete clinic');
-    this.clinics.splice(clinicIndex, 1);
+    this.clinics = this.clinics.filter((clinic) => clinic.id !== id);
     return true;
   }
 }
