@@ -39,6 +39,7 @@
     "graphql": "^15.5.0",
     "graphql-import-node": "^0.0.4",
     "graphql-modules": "^1.4.1",
+    "pg": "^8.5.1",
     "reflect-metadata": "^0.1.13"
   }
 }

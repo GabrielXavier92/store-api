@@ -12,6 +12,8 @@ services:
       - '4000:4000'
     depends_on:
       - postgres
+    networks:
+      - default
   postgres:
     container_name: 'POSTGRESS'
     image: postgres:13.2
@@ -23,3 +25,7 @@ services:
       - '5432:5432'
     volumes:
       - /home/gabrielxavier/Documents/personal/clinic/api/db:/var/lib/postgresql/data
+    networks:
+      - default
+networks:
+  default:
