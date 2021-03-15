@@ -1,7 +1,16 @@
 module.exports = {
   extends: ['airbnb-typescript/base'],
+  parser: '@typescript-eslint/parser',
   parserOptions: {
+    sourceType: 'module',
     project: './tsconfig.json',
+  },
+  settings: {
+    'import/resolver': {
+      typescript: {
+        alwaysTryTypes: true,
+      },
+    },
   },
   rules: {
     'import/extensions': 0,
