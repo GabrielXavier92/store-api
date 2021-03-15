@@ -1,0 +1,16 @@
+FROM node:14-alpine
+
+# Create app directory
+RUN mkdir -p /api/src/app
+WORKDIR /api/src/app
+
+# Install dependencies
+COPY package.json .
+RUN yarn
+
+# Bundle app source
+COPY . .
+
+# Exports
+EXPOSE 4000
+CMD [ "npm", "run", "dev" ]

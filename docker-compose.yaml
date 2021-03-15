@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  api:
+    container_name: 'API'
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./:/api/src/app
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+  postgres:
+    container_name: 'POSTGRESS'
+    image: postgres:13.2
+    environment:
+      POSTGRES_DB: clinic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - /home/gabrielxavier/Documents/personal/clinic/api/db:/var/lib/postgresql/data
