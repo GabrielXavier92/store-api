@@ -9,7 +9,7 @@ export class AuthProvider {
   createUser(data: AuthModule.SignUpInput): AuthModule.Auth {
     const { email } = data;
 
-    const user = this.user.find((user) => user.email === email);
+    const user = this.user.find((usr) => usr.email === email);
     if (user) throw new UserInputError('Failed to create account');
 
     this.user.push(data);
@@ -21,12 +21,12 @@ export class AuthProvider {
 
   logIn(data: AuthModule.SignInInput): AuthModule.Auth {
     const { email, password } = data;
-    const user = this.user.find((user) => user.email === email);
+    const user = this.user.find((usr) => usr.email === email);
 
     if (!user || user.password !== password) throw new UserInputError('Failed to login');
     /* TODO
       injetar provider CLINIC e inserir as clinics/roles que o User pertence
-      colocar isso no token e retornar para o usuario 
+      colocar isso no token e retornar para o usuario
     */
 
     return {
