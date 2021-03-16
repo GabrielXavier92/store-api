@@ -1,9 +1,10 @@
 import { Request } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { User } from 'global';
+import { DecodeJWT } from '../modules/auth/utils';
 
 const prisma = new PrismaClient({
   log: ['info', 'warn', 'error'],
+  rejectOnNotFound: true,
 });
 
 export interface ISession {
@@ -11,20 +12,19 @@ export interface ISession {
 }
 
 async function createContext(session: ISession): Promise<GraphQLModules.GlobalContext> {
-  // const authToken = session.req.headers.authorization;
-  // console.log(authToken);
-  /*
-  TODO
-  Usar o decode do authToken para extrair as informacoes do usuario.
-  */
-  const user: User = {
-    id: '12dasdasda',
-    clinics: [{ id: '12312qsd', ownerId: '12dasdasda', role: 'ADMIN' }],
-  };
+  const authToken = session.req.headers.authorization;
+
+  if (authToken) {
+    const user = await DecodeJWT(authToken);
+    return {
+      req: session.req,
+      user,
+      prisma,
+    };
+  }
 
   return {
     req: session.req,
-    user,
     prisma,
   };
 }
