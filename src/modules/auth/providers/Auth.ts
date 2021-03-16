@@ -1,37 +1,60 @@
+import * as bcrypt from 'bcryptjs';
+import * as jwt from 'jsonwebtoken';
 import { UserInputError } from 'apollo-server-errors';
-import { Injectable } from 'graphql-modules';
+import { Injectable, ExecutionContext } from 'graphql-modules';
 import { AuthModule } from '../types';
 
 @Injectable()
 export class AuthProvider {
-  user: [AuthModule.SignUpInput] = [{ email: 'a', password: 'b' }];
+  @ExecutionContext()
+  private context: ExecutionContext;
 
-  createUser(data: AuthModule.SignUpInput): AuthModule.Auth {
-    const { email } = data;
+  async createUser(data: AuthModule.SignUpInput): Promise<AuthModule.Auth> {
+    const { email, password } = data;
 
-    const user = this.user.find((usr) => usr.email === email);
+    const user = await this.context.prisma.user.findFirst({ where: { email } });
     if (user) throw new UserInputError('Failed to create account');
 
-    this.user.push(data);
+    const hashPassword = await bcrypt.hash(password, 10);
+
+    const newUser: AuthModule.SignUpInput = {
+      ...data,
+      password: hashPassword,
+    };
+
+    const createdUser = await this.context.prisma.user.create({ data: newUser });
+    const token = await this.generateToken(createdUser.id);
 
     return {
-      token: 'createUserToken',
+      token,
     };
   }
 
-  logIn(data: AuthModule.SignInInput): AuthModule.Auth {
+  async logIn(data: AuthModule.SignInInput): Promise<AuthModule.Auth> {
     const { email, password } = data;
-    const user = this.user.find((usr) => usr.email === email);
+    const user = await this.context.prisma.user.findFirst({ where: { email } });
 
-    if (!user || user.password !== password) throw new UserInputError('Failed to login');
-    /* TODO
-      injetar provider CLINIC e inserir as clinics/roles que o User pertence
-      colocar isso no token e retornar para o usuario
-    */
+    if (!user || !(await bcrypt.compare(password, user.password))) throw new UserInputError('Failed to login');
+
+    const token = await this.generateToken(user.id);
 
     return {
-      token: 'logInToken',
+      token,
     };
+  }
+
+  async generateToken(id: string): Promise<string> {
+    const userClinics = this.context.prisma.userOnClinic.findMany({
+      where: {
+        userId: id,
+      },
+    });
+
+    const token = jwt.sign({ id, clinics: userClinics }, process.env.JWT_SECRET as string, {
+      expiresIn: '7days',
+    });
+
+    return token;
   }
 }
 
