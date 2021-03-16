@@ -1,9 +1,9 @@
 import { AuthorizatedMiddleware, AuthenticatedMiddleware } from '../../auth/utils';
 
-const QueryMiddleware = {
-  Query: {
+const MutationMiddleware = {
+  Mutation: {
     '*': [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
   },
 };
 
-export default QueryMiddleware;
+export default MutationMiddleware;
