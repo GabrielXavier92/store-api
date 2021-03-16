@@ -16,7 +16,7 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createClinic: Clinic;
+  createClinic: CreatedClinic;
   deleteClinic?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<Auth>;
   signUp?: Maybe<Auth>;
@@ -88,31 +88,34 @@ export type QuerySpecialtyArgs = {
   id: Scalars['ID'];
 };
 
-export type ClinicPlan =
-  | 'STARTER';
+export type CreatedClinic = {
+  __typename?: 'CreatedClinic';
+  clinic: Clinic;
+  token: Scalars['String'];
+};
 
 export type Clinic = {
   __typename?: 'Clinic';
   id: Scalars['ID'];
-  ownerId: Scalars['ID'];
   name: Scalars['String'];
   country?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['Int']>;
   complement?: Maybe<Scalars['String']>;
-  plan?: Maybe<ClinicPlan>;
+  plan: Scalars['String'];
 };
 
 export type ClinicInput = {
-  ownerId: Scalars['ID'];
   name: Scalars['String'];
   country?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
+  city?: Maybe<Scalars['String']>;
   address?: Maybe<Scalars['String']>;
   number?: Maybe<Scalars['Int']>;
   complement?: Maybe<Scalars['String']>;
-  plan?: Maybe<ClinicPlan>;
+  plan: Scalars['String'];
 };
 
 export type Doctor = {
@@ -215,7 +218,7 @@ export type ResolversTypes = {
   SignInInput: SignInInput;
   SignUpInput: SignUpInput;
   Query: ResolverTypeWrapper<{}>;
-  ClinicPlan: ClinicPlan;
+  CreatedClinic: ResolverTypeWrapper<CreatedClinic>;
   Clinic: ResolverTypeWrapper<Clinic>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   ClinicInput: ClinicInput;
@@ -233,6 +236,7 @@ export type ResolversParentTypes = {
   SignInInput: SignInInput;
   SignUpInput: SignUpInput;
   Query: {};
+  CreatedClinic: CreatedClinic;
   Clinic: Clinic;
   Int: Scalars['Int'];
   ClinicInput: ClinicInput;
@@ -241,7 +245,7 @@ export type ResolversParentTypes = {
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createClinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType, RequireFields<MutationCreateClinicArgs, 'clinicInput'>>;
+  createClinic?: Resolver<ResolversTypes['CreatedClinic'], ParentType, ContextType, RequireFields<MutationCreateClinicArgs, 'clinicInput'>>;
   deleteClinic?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteClinicArgs, 'id'>>;
   signIn?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'signInInput'>>;
   signUp?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'signUpInput'>>;
@@ -260,16 +264,22 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   specialty?: Resolver<Maybe<ResolversTypes['Specialty']>, ParentType, ContextType, RequireFields<QuerySpecialtyArgs, 'id'>>;
 };
 
+export type CreatedClinicResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreatedClinic'] = ResolversParentTypes['CreatedClinic']> = {
+  clinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type ClinicResolvers<ContextType = any, ParentType extends ResolversParentTypes['Clinic'] = ResolversParentTypes['Clinic']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  ownerId?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   number?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   complement?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  plan?: Resolver<Maybe<ResolversTypes['ClinicPlan']>, ParentType, ContextType>;
+  plan?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -291,6 +301,7 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Auth?: AuthResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  CreatedClinic?: CreatedClinicResolvers<ContextType>;
   Clinic?: ClinicResolvers<ContextType>;
   Doctor?: DoctorResolvers<ContextType>;
   Specialty?: SpecialtyResolvers<ContextType>;

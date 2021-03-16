@@ -4,34 +4,35 @@ extend type Query {
 }
 
 extend type Mutation {
-  createClinic(clinicInput: ClinicInput!): Clinic!
+  createClinic(clinicInput: ClinicInput!): CreatedClinic!
   updateClinic(id: ID!, clinicInput: ClinicInput!): Clinic!
   deleteClinic(id: ID!): Boolean
 }
 
-enum ClinicPlan {
-  STARTER
+type CreatedClinic {
+  clinic: Clinic!
+  token: String!
 }
 
 type Clinic {
   id: ID!
-  ownerId: ID!
   name: String!
   country: String
   state: String
+  city: String
   address: String
   number: Int
   complement: String
-  plan: ClinicPlan
+  plan: String!
 }
 
 input ClinicInput {
-  ownerId: ID!
   name: String!
   country: String
   state: String
+  city: String
   address: String
   number: Int
   complement: String
-  plan: ClinicPlan
+  plan: String!
 }
