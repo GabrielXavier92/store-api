@@ -3,9 +3,11 @@ import DoctorModule from './doctor';
 import AuthModule from './auth';
 import SpecialtyModule from './specialty';
 import ClinicModule from './clinic';
+import { AuthProvider } from './auth/providers';
 
 const application = createApplication({
-  modules: [DoctorModule, SpecialtyModule, AuthModule, ClinicModule],
+  modules: [AuthModule, DoctorModule, SpecialtyModule, ClinicModule],
+  providers: [AuthProvider],
 });
 
 export default application;

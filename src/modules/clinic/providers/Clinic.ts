@@ -1,59 +1,98 @@
-import { Injectable } from 'graphql-modules';
-import { UserInputError } from 'apollo-server-errors';
+import { Injectable, ExecutionContext, Inject } from 'graphql-modules';
+import { AuthenticationError, ApolloError, ForbiddenError } from 'apollo-server-errors';
 
 import { ClinicModule } from '../types';
-
+import { plans } from '../constants';
+import { AuthProvider } from '../../auth/providers';
 @Injectable()
 export class ClinicProvider {
-  clinics: ClinicModule.Clinic[] = [
-    {
-      id: 'uuid1',
-      ownerId: 'ownerId',
-      name: 'Clinica Odontologica',
-      country: 'Brasil',
-      state: 'MG',
-      address: 'Rua Vasconcelos',
-      number: 123,
-      complement: 'Apto 301',
-      plan: 'STARTER',
-    },
-  ];
+  constructor(@Inject(AuthProvider) private auth: AuthProvider) {}
 
-  getClinic(id: string): ClinicModule.Clinic {
-    const findClinic = this.clinics.find((clinic) => clinic.id === id);
-    if (!findClinic) throw new UserInputError('Unnable to find clinic');
-    return findClinic;
+  @ExecutionContext()
+  private context: ExecutionContext;
+
+  async getClinic(id: string): Promise<ClinicModule.Clinic> {
+    try {
+      const clinic = await this.context.prisma.clinic.findUnique({ where: { id } });
+      return clinic!;
+    } catch (e) {
+      throw new ForbiddenError(e);
+    }
   }
 
-  getClinics(): ClinicModule.Clinic[] {
-    return this.clinics;
+  async getClinics(): Promise<ClinicModule.Clinic[]> {
+    try {
+      return this.context.prisma.clinic.findMany({
+        where: {
+          UserOnClinic: {
+            some: { userId: this.context.user?.id },
+          },
+        },
+      });
+    } catch (e) {
+      throw new ForbiddenError(e);
+    }
   }
 
-  createClinic(clinic: ClinicModule.ClinicInput): ClinicModule.Clinic {
-    const newClinic = {
-      ...clinic,
-      id: `uuid${this.clinics.length + 1}`,
-    };
-    this.clinics.push(newClinic);
+  async createClinic(clinic: ClinicModule.ClinicInput): Promise<ClinicModule.CreatedClinic> {
+    /*
+    TODO
+    LOGICA PARA VERIFICAR QUAL PLANO A CLINIC ESTA BASEADO NOS PAGAMENTOS
+    */
+    let newClinic;
+    if (this.context.user?.id) {
+      newClinic = {
+        ...clinic,
+        ownerId: this.context.user?.id,
+        plan: clinic.plan || plans.starter,
+      };
+      const createdClinic = await this.context.prisma.clinic.create({ data: newClinic });
+      await this.createUserOnClinic(createdClinic.ownerId, createdClinic.id, 'ADMIN');
 
-    return newClinic;
+      const token = await this.auth.generateToken(createdClinic.ownerId);
+
+      return {
+        clinic: createdClinic,
+        token,
+      };
+    }
+
+    throw new AuthenticationError('Unnable to create Clinic');
   }
 
-  updateClinic(id: string, updatedClinic: ClinicModule.ClinicInput): ClinicModule.Clinic {
-    const clinicIndex = this.clinics.findIndex((clinic) => clinic.id === id)!;
-    if (!clinicIndex) throw new UserInputError('Unnable to find clinic');
-    this.clinics[clinicIndex] = {
-      id,
-      ...updatedClinic,
-    };
-    return this.clinics[clinicIndex];
+  async createUserOnClinic(userId: string, clinicId: string, role: string): Promise<boolean> {
+    try {
+      await this.context.prisma.userOnClinic.create({
+        data: {
+          userId,
+          clinicId,
+          role,
+        },
+      });
+      return true;
+    } catch (e) {
+      throw new ForbiddenError(e);
+    }
   }
 
-  deleteClinic(id: string): boolean {
-    const clinicIndex = this.clinics.findIndex((clinic) => clinic.id === id)!;
-    if (!clinicIndex) throw new UserInputError('Unnable to delete clinic');
-    this.clinics = this.clinics.filter((clinic) => clinic.id !== id);
-    return true;
+  async updateClinic(id: string, updatedClinic: ClinicModule.ClinicInput): Promise<ClinicModule.Clinic> {
+    try {
+      return this.context.prisma.clinic.update({
+        where: { id },
+        data: updatedClinic,
+      });
+    } catch (e) {
+      throw new ApolloError(e);
+    }
+  }
+
+  async deleteClinic(id: string): Promise<boolean> {
+    try {
+      await this.context.prisma.clinic.delete({ where: { id } });
+      return true;
+    } catch (e) {
+      throw new ApolloError(e);
+    }
   }
 }
 
