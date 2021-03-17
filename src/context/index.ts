@@ -4,7 +4,6 @@ import { DecodeJWT } from '../modules/auth/utils';
 
 const prisma = new PrismaClient({
   log: ['info', 'warn', 'error'],
-  rejectOnNotFound: true,
 });
 
 export interface ISession {
