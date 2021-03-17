@@ -44,7 +44,7 @@ export class AuthProvider {
   }
 
   async generateToken(id: string): Promise<string> {
-    const userClinics = this.context.prisma.userOnClinic.findMany({
+    const userClinics = await this.context.prisma.userOnClinic.findMany({
       where: {
         userId: id,
       },
