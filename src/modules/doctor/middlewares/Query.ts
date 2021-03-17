@@ -1,8 +1,8 @@
-import { AuthorizatedMiddleware } from '../../auth/utils';
+import { AuthenticatedMiddleware } from '../../auth/utils';
 
 const QueryMiddleware = {
   Query: {
-    doctor: [AuthorizatedMiddleware('Minha role')],
+    doctor: [AuthenticatedMiddleware],
   },
 };
 
