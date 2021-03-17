@@ -9,9 +9,11 @@ export interface User {
 }
 
 export interface Clinics {
-  id: string;
-  ownerId: string;
   role: string;
+  userId: string;
+  clinicId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 declare global {
   namespace GraphQLModules {
