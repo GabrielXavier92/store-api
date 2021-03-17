@@ -1,8 +1,9 @@
-import { AuthorizatedMiddleware, AuthenticatedMiddleware } from '../../auth/utils';
+import { AuthenticatedMiddleware } from '../../auth/utils';
+import { AuthorizatedMiddleware } from './utils';
 
 const QueryMiddleware = {
   Query: {
-    '*': [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
+    clinic: [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
   },
 };
 
