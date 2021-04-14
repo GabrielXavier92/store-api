@@ -13,7 +13,6 @@ const QueryResolver: ProductModule.Resolvers = {
       return injector.get(ProductProvider).deleteProduct(productId);
     },
     createCategory(_, { categoryInput }, { injector }: GraphQLModules.Context) {
-      console.log(categoryInput);
       return injector.get(CategoryProvider).createCategory(categoryInput);
     },
     updateCategory(_, { categoryId, categoryInput }, { injector }: GraphQLModules.Context) {

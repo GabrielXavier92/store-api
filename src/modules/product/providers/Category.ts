@@ -19,7 +19,6 @@ export class CategoryProvider {
   async getCategoryByProduct(productId: string): Promise<ProductModule.Category> {
     try {
       const category = await this.context.prisma.product.findUnique({ where: { id: productId } }).category();
-      console.log(category);
       return category!;
     } catch (e) {
       throw new ForbiddenError(e);
