@@ -6,9 +6,11 @@ const AuthorizatedMiddleware = (role: string) => (
 ) => {
   if (!context.user?.stores.length) throw new AuthenticationError('You do not have clinics already');
 
+  const hasArgs = !!args.storeId;
+
   // check if user have clinic and have the right role
   const isAuthorizated = context.user?.stores.find(
-    (store) => store.userId === context.user?.id && store.storeId === args.id && store.role === role,
+    (store) => store.userId === context.user?.id && (hasArgs ? store.storeId === args.storeId : true) && store.role === role,
   );
   if (!isAuthorizated) throw new AuthenticationError('You do not have permission');
 

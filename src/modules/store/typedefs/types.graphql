@@ -16,6 +16,7 @@ type CreatedStore {
 type Store {
   id: ID!
   storeName: String!
+  displayName: String!
   zipCode: String!
   country: String!
   state: String!
@@ -28,6 +29,7 @@ type Store {
 
 input StoreInput {
   storeName: String!
+  displayName: String!
   zipCode: String!
   country: String!
   state: String!

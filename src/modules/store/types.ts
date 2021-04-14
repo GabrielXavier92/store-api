@@ -6,11 +6,11 @@ export namespace StoreModule {
     Query: 'store' | 'stores';
     Mutation: 'createStore' | 'updateStore';
     CreatedStore: 'store' | 'token';
-    Store: 'id' | 'storeName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
+    Store: 'id' | 'storeName' | 'displayName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
   };
   
   interface DefinedInputFields {
-    StoreInput: 'storeName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
+    StoreInput: 'storeName' | 'displayName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
   };
   
   export type Query = Pick<Types.Query, DefinedFields['Query']>;
@@ -54,6 +54,7 @@ export namespace StoreModule {
       '*'?: gm.Middleware[];
       id?: gm.Middleware[];
       storeName?: gm.Middleware[];
+      displayName?: gm.Middleware[];
       zipCode?: gm.Middleware[];
       country?: gm.Middleware[];
       state?: gm.Middleware[];

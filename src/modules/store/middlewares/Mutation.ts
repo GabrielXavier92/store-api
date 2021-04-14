@@ -3,6 +3,7 @@ import { AuthorizatedMiddleware } from './utils';
 
 const MutationMiddleware = {
   Mutation: {
+    createStpre: [AuthenticatedMiddleware],
     updateStore: [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
   },
 };

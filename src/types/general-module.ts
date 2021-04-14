@@ -17,7 +17,6 @@ export type Scalars = {
 export type Mutation = {
   __typename?: 'Mutation';
   createStore: CreatedStore;
-  mongoTeste?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<Auth>;
   signUp?: Maybe<Auth>;
   updateStore: Store;
@@ -26,11 +25,6 @@ export type Mutation = {
 
 export type MutationCreateStoreArgs = {
   storeInput: StoreInput;
-};
-
-
-export type MutationMongoTesteArgs = {
-  signUpInput: SignUpInput;
 };
 
 
@@ -60,7 +54,6 @@ export type SignInInput = {
 };
 
 export type SignUpInput = {
-  fullName?: Maybe<Scalars['String']>;
   email: Scalars['String'];
   password: Scalars['String'];
 };
@@ -86,6 +79,7 @@ export type Store = {
   __typename?: 'Store';
   id: Scalars['ID'];
   storeName: Scalars['String'];
+  displayName: Scalars['String'];
   zipCode: Scalars['String'];
   country: Scalars['String'];
   state: Scalars['String'];
@@ -98,6 +92,7 @@ export type Store = {
 
 export type StoreInput = {
   storeName: Scalars['String'];
+  displayName: Scalars['String'];
   zipCode: Scalars['String'];
   country: Scalars['String'];
   state: Scalars['String'];
@@ -187,7 +182,6 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
   Auth: ResolverTypeWrapper<Auth>;
   String: ResolverTypeWrapper<Scalars['String']>;
@@ -198,12 +192,12 @@ export type ResolversTypes = {
   Store: ResolverTypeWrapper<Store>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   StoreInput: StoreInput;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Mutation: {};
-  Boolean: Scalars['Boolean'];
   ID: Scalars['ID'];
   Auth: Auth;
   String: Scalars['String'];
@@ -214,11 +208,11 @@ export type ResolversParentTypes = {
   Store: Store;
   Int: Scalars['Int'];
   StoreInput: StoreInput;
+  Boolean: Scalars['Boolean'];
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createStore?: Resolver<ResolversTypes['CreatedStore'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'storeInput'>>;
-  mongoTeste?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationMongoTesteArgs, 'signUpInput'>>;
   signIn?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'signInInput'>>;
   signUp?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'signUpInput'>>;
   updateStore?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<MutationUpdateStoreArgs, 'id' | 'storeInput'>>;
@@ -243,6 +237,7 @@ export type CreatedStoreResolvers<ContextType = any, ParentType extends Resolver
 export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   storeName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  displayName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   zipCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   country?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   state?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
