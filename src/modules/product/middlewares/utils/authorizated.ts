@@ -4,7 +4,7 @@ const AuthorizatedProductMiddleware = (roles: string[]) => async (
   { args, context }: { args: any; context: GraphQLModules.Context },
   next: any,
 ) => {
-  if (!context.user?.stores.length) throw new AuthenticationError('You do not have clinics already');
+  if (!context.user?.stores.length) throw new AuthenticationError('You do not have stores already');
 
   const checkProduct = (storeId: string): boolean =>
     !!context.user?.stores.find(
@@ -12,7 +12,7 @@ const AuthorizatedProductMiddleware = (roles: string[]) => async (
     );
 
   const checkProductOwner = async (): Promise<boolean> => {
-    const { productId, productInput, clinicId } = args;
+    const { productId, productInput, storeId } = args;
 
     if (productId) {
       const product = await context.prisma.product.findUnique({ where: { id: productId } });
@@ -21,7 +21,7 @@ const AuthorizatedProductMiddleware = (roles: string[]) => async (
 
       return checkProduct(product.storeId);
     }
-    return checkProduct(productInput?.storeId || clinicId);
+    return checkProduct(productInput?.storeId || storeId);
   };
 
   const isAuthorizated = await checkProductOwner();
