@@ -19,13 +19,13 @@ services:
     container_name: 'postgres-store'
     image: postgres:13.2
     environment:
-      POSTGRES_DB: clinic
+      POSTGRES_DB: store
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
       - '5432:5432'
     volumes:
-      - /home/gabrielxavier/Documents/personal/clinic/api/db:/postgres/var/lib/postgresql/data
+      - /home/gabrielxavier/Documents/personal/store-api/api/db:/postgres/var/lib/postgresql/data
     networks:
       - default
   mongo:
@@ -37,7 +37,7 @@ services:
     ports:
       - '27017:27017'
     volumes:
-      - /home/gabrielxavier/Documents/personal/clinic/api/db:/mongo/data/db
+      - /home/gabrielxavier/Documents/personal/store-api/api/db:/mongo/data/db
     networks:
       - default
 
