@@ -1,7 +1,6 @@
 type Mutation {
   signIn(signInInput: SignInInput!): Auth
   signUp(signUpInput: SignUpInput!): Auth
-  mongoTeste(signUpInput: SignUpInput!): Boolean
 }
 
 type Auth {
@@ -14,7 +13,6 @@ input SignInInput {
 }
 
 input SignUpInput {
-  fullName: String
   email: String!
   password: String!
 }
