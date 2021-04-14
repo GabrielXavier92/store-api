@@ -5,7 +5,7 @@ import { StoreModule } from '../types';
 import { plans } from '../constants';
 import { AuthProvider } from '../../auth/providers';
 @Injectable()
-export class ClinicProvider {
+export class StoreProvider {
   constructor(@Inject(AuthProvider) private auth: AuthProvider) {}
 
   @ExecutionContext()
@@ -43,7 +43,7 @@ export class ClinicProvider {
         plan: store.plan || plans.starter,
       };
       const createdStore = await this.context.prisma.store.create({ data: newStore });
-      await this.createUserOnClinic(createdStore.ownerId, createdStore.id, 'ADMIN');
+      await this.createUserOnStore(createdStore.ownerId, createdStore.id, 'ADMIN');
 
       const token = await this.auth.generateToken(createdStore.ownerId);
 
@@ -53,10 +53,10 @@ export class ClinicProvider {
       };
     }
 
-    throw new AuthenticationError('Unnable to create Clinic');
+    throw new AuthenticationError('Unnable to create Store');
   }
 
-  async createUserOnClinic(userId: string, storeId: string, role: string): Promise<boolean> {
+  async createUserOnStore(userId: string, storeId: string, role: string): Promise<boolean> {
     try {
       await this.context.prisma.userOnStore.create({
         data: {
@@ -83,4 +83,4 @@ export class ClinicProvider {
   }
 }
 
-export default ClinicProvider;
+export default StoreProvider;
