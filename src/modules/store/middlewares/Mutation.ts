@@ -3,8 +3,7 @@ import { AuthorizatedMiddleware } from './utils';
 
 const MutationMiddleware = {
   Mutation: {
-    updateClinic: [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
-    deleteClinic: [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
+    updateStore: [AuthenticatedMiddleware, AuthorizatedMiddleware('ADMIN')],
   },
 };
 

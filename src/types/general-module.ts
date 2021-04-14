@@ -16,22 +16,16 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createClinic: CreatedClinic;
-  deleteClinic?: Maybe<Scalars['Boolean']>;
+  createStore: CreatedStore;
   mongoTeste?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<Auth>;
   signUp?: Maybe<Auth>;
-  updateClinic: Clinic;
+  updateStore: Store;
 };
 
 
-export type MutationCreateClinicArgs = {
-  clinicInput: ClinicInput;
-};
-
-
-export type MutationDeleteClinicArgs = {
-  id: Scalars['ID'];
+export type MutationCreateStoreArgs = {
+  storeInput: StoreInput;
 };
 
 
@@ -50,9 +44,9 @@ export type MutationSignUpArgs = {
 };
 
 
-export type MutationUpdateClinicArgs = {
+export type MutationUpdateStoreArgs = {
   id: Scalars['ID'];
-  clinicInput: ClinicInput;
+  storeInput: StoreInput;
 };
 
 export type Auth = {
@@ -73,69 +67,45 @@ export type SignUpInput = {
 
 export type Query = {
   __typename?: 'Query';
-  clinic: Clinic;
-  clinics?: Maybe<Array<Maybe<Clinic>>>;
-  doctor?: Maybe<Doctor>;
-  specialty?: Maybe<Specialty>;
+  store: Store;
+  stores?: Maybe<Array<Maybe<Store>>>;
 };
 
 
-export type QueryClinicArgs = {
-  id: Scalars['ID'];
+export type QueryStoreArgs = {
+  storeId: Scalars['ID'];
 };
 
-
-export type QueryDoctorArgs = {
-  id: Scalars['ID'];
-};
-
-
-export type QuerySpecialtyArgs = {
-  id: Scalars['ID'];
-};
-
-export type CreatedClinic = {
-  __typename?: 'CreatedClinic';
-  clinic: Clinic;
+export type CreatedStore = {
+  __typename?: 'CreatedStore';
+  store: Store;
   token: Scalars['String'];
 };
 
-export type Clinic = {
-  __typename?: 'Clinic';
+export type Store = {
+  __typename?: 'Store';
   id: Scalars['ID'];
-  name: Scalars['String'];
-  country?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Int']>;
+  storeName: Scalars['String'];
+  zipCode: Scalars['String'];
+  country: Scalars['String'];
+  state: Scalars['String'];
+  city: Scalars['String'];
+  address: Scalars['String'];
+  number: Scalars['Int'];
   complement?: Maybe<Scalars['String']>;
   plan: Scalars['String'];
 };
 
-export type ClinicInput = {
-  name: Scalars['String'];
-  country?: Maybe<Scalars['String']>;
-  state?: Maybe<Scalars['String']>;
-  city?: Maybe<Scalars['String']>;
-  address?: Maybe<Scalars['String']>;
-  number?: Maybe<Scalars['Int']>;
+export type StoreInput = {
+  storeName: Scalars['String'];
+  zipCode: Scalars['String'];
+  country: Scalars['String'];
+  state: Scalars['String'];
+  city: Scalars['String'];
+  address: Scalars['String'];
+  number: Scalars['Int'];
   complement?: Maybe<Scalars['String']>;
   plan: Scalars['String'];
-};
-
-export type Doctor = {
-  __typename?: 'Doctor';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  specialties?: Maybe<Array<Maybe<Specialty>>>;
-};
-
-export type Specialty = {
-  __typename?: 'Specialty';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  code?: Maybe<Scalars['String']>;
 };
 
 
@@ -224,12 +194,10 @@ export type ResolversTypes = {
   SignInInput: SignInInput;
   SignUpInput: SignUpInput;
   Query: ResolverTypeWrapper<{}>;
-  CreatedClinic: ResolverTypeWrapper<CreatedClinic>;
-  Clinic: ResolverTypeWrapper<Clinic>;
+  CreatedStore: ResolverTypeWrapper<CreatedStore>;
+  Store: ResolverTypeWrapper<Store>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
-  ClinicInput: ClinicInput;
-  Doctor: ResolverTypeWrapper<Doctor>;
-  Specialty: ResolverTypeWrapper<Specialty>;
+  StoreInput: StoreInput;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -242,21 +210,18 @@ export type ResolversParentTypes = {
   SignInInput: SignInInput;
   SignUpInput: SignUpInput;
   Query: {};
-  CreatedClinic: CreatedClinic;
-  Clinic: Clinic;
+  CreatedStore: CreatedStore;
+  Store: Store;
   Int: Scalars['Int'];
-  ClinicInput: ClinicInput;
-  Doctor: Doctor;
-  Specialty: Specialty;
+  StoreInput: StoreInput;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  createClinic?: Resolver<ResolversTypes['CreatedClinic'], ParentType, ContextType, RequireFields<MutationCreateClinicArgs, 'clinicInput'>>;
-  deleteClinic?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteClinicArgs, 'id'>>;
+  createStore?: Resolver<ResolversTypes['CreatedStore'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'storeInput'>>;
   mongoTeste?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationMongoTesteArgs, 'signUpInput'>>;
   signIn?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'signInInput'>>;
   signUp?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'signUpInput'>>;
-  updateClinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType, RequireFields<MutationUpdateClinicArgs, 'id' | 'clinicInput'>>;
+  updateStore?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<MutationUpdateStoreArgs, 'id' | 'storeInput'>>;
 };
 
 export type AuthResolvers<ContextType = any, ParentType extends ResolversParentTypes['Auth'] = ResolversParentTypes['Auth']> = {
@@ -265,42 +230,27 @@ export type AuthResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  clinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType, RequireFields<QueryClinicArgs, 'id'>>;
-  clinics?: Resolver<Maybe<Array<Maybe<ResolversTypes['Clinic']>>>, ParentType, ContextType>;
-  doctor?: Resolver<Maybe<ResolversTypes['Doctor']>, ParentType, ContextType, RequireFields<QueryDoctorArgs, 'id'>>;
-  specialty?: Resolver<Maybe<ResolversTypes['Specialty']>, ParentType, ContextType, RequireFields<QuerySpecialtyArgs, 'id'>>;
+  store?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<QueryStoreArgs, 'storeId'>>;
+  stores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
 };
 
-export type CreatedClinicResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreatedClinic'] = ResolversParentTypes['CreatedClinic']> = {
-  clinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType>;
+export type CreatedStoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['CreatedStore'] = ResolversParentTypes['CreatedStore']> = {
+  store?: Resolver<ResolversTypes['Store'], ParentType, ContextType>;
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ClinicResolvers<ContextType = any, ParentType extends ResolversParentTypes['Clinic'] = ResolversParentTypes['Clinic']> = {
+export type StoreResolvers<ContextType = any, ParentType extends ResolversParentTypes['Store'] = ResolversParentTypes['Store']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  country?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  city?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  address?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  number?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  storeName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  zipCode?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  country?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  state?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  city?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  address?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  number?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   complement?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   plan?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type DoctorResolvers<ContextType = any, ParentType extends ResolversParentTypes['Doctor'] = ResolversParentTypes['Doctor']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  specialties?: Resolver<Maybe<Array<Maybe<ResolversTypes['Specialty']>>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type SpecialtyResolvers<ContextType = any, ParentType extends ResolversParentTypes['Specialty'] = ResolversParentTypes['Specialty']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -308,10 +258,8 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Auth?: AuthResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
-  CreatedClinic?: CreatedClinicResolvers<ContextType>;
-  Clinic?: ClinicResolvers<ContextType>;
-  Doctor?: DoctorResolvers<ContextType>;
-  Specialty?: SpecialtyResolvers<ContextType>;
+  CreatedStore?: CreatedStoreResolvers<ContextType>;
+  Store?: StoreResolvers<ContextType>;
 };
 
 

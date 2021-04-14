@@ -1,34 +1,34 @@
 /* eslint-disable */
 import * as Types from "../../types/general-module";
 import * as gm from "graphql-modules";
-export namespace ClinicModule {
+export namespace StoreModule {
   interface DefinedFields {
-    Query: 'clinic' | 'clinics';
-    Mutation: 'createClinic' | 'updateClinic' | 'deleteClinic';
-    CreatedClinic: 'clinic' | 'token';
-    Clinic: 'id' | 'name' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
+    Query: 'store' | 'stores';
+    Mutation: 'createStore' | 'updateStore';
+    CreatedStore: 'store' | 'token';
+    Store: 'id' | 'storeName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
   };
   
   interface DefinedInputFields {
-    ClinicInput: 'name' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
+    StoreInput: 'storeName' | 'zipCode' | 'country' | 'state' | 'city' | 'address' | 'number' | 'complement' | 'plan';
   };
   
   export type Query = Pick<Types.Query, DefinedFields['Query']>;
-  export type Clinic = Pick<Types.Clinic, DefinedFields['Clinic']>;
+  export type Store = Pick<Types.Store, DefinedFields['Store']>;
   export type Mutation = Pick<Types.Mutation, DefinedFields['Mutation']>;
-  export type CreatedClinic = Pick<Types.CreatedClinic, DefinedFields['CreatedClinic']>;
-  export type ClinicInput = Pick<Types.ClinicInput, DefinedInputFields['ClinicInput']>;
+  export type CreatedStore = Pick<Types.CreatedStore, DefinedFields['CreatedStore']>;
+  export type StoreInput = Pick<Types.StoreInput, DefinedInputFields['StoreInput']>;
   
   export type QueryResolvers = Pick<Types.QueryResolvers, DefinedFields['Query']>;
   export type MutationResolvers = Pick<Types.MutationResolvers, DefinedFields['Mutation']>;
-  export type CreatedClinicResolvers = Pick<Types.CreatedClinicResolvers, DefinedFields['CreatedClinic'] | '__isTypeOf'>;
-  export type ClinicResolvers = Pick<Types.ClinicResolvers, DefinedFields['Clinic'] | '__isTypeOf'>;
+  export type CreatedStoreResolvers = Pick<Types.CreatedStoreResolvers, DefinedFields['CreatedStore'] | '__isTypeOf'>;
+  export type StoreResolvers = Pick<Types.StoreResolvers, DefinedFields['Store'] | '__isTypeOf'>;
   
   export interface Resolvers {
     Query?: QueryResolvers;
     Mutation?: MutationResolvers;
-    CreatedClinic?: CreatedClinicResolvers;
-    Clinic?: ClinicResolvers;
+    CreatedStore?: CreatedStoreResolvers;
+    Store?: StoreResolvers;
   };
   
   export interface MiddlewareMap {
@@ -37,24 +37,24 @@ export namespace ClinicModule {
     };
     Query?: {
       '*'?: gm.Middleware[];
-      clinic?: gm.Middleware[];
-      clinics?: gm.Middleware[];
+      store?: gm.Middleware[];
+      stores?: gm.Middleware[];
     };
     Mutation?: {
       '*'?: gm.Middleware[];
-      createClinic?: gm.Middleware[];
-      updateClinic?: gm.Middleware[];
-      deleteClinic?: gm.Middleware[];
+      createStore?: gm.Middleware[];
+      updateStore?: gm.Middleware[];
     };
-    CreatedClinic?: {
+    CreatedStore?: {
       '*'?: gm.Middleware[];
-      clinic?: gm.Middleware[];
+      store?: gm.Middleware[];
       token?: gm.Middleware[];
     };
-    Clinic?: {
+    Store?: {
       '*'?: gm.Middleware[];
       id?: gm.Middleware[];
-      name?: gm.Middleware[];
+      storeName?: gm.Middleware[];
+      zipCode?: gm.Middleware[];
       country?: gm.Middleware[];
       state?: gm.Middleware[];
       city?: gm.Middleware[];

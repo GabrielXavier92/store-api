@@ -1,6 +1,6 @@
-extend type Query {
-  store(id: ID!): Clinic!
-  stores: [Clinic]
+type Query {
+  store(storeId: ID!): Store!
+  stores: [Store]
 }
 
 extend type Mutation {

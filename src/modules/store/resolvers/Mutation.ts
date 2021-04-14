@@ -1,16 +1,13 @@
-import { ClinicProvider } from '../providers';
-import { ClinicModule } from '../types';
+import { StoreProvider } from '../providers';
+import { StoreModule } from '../types';
 
-const QueryResolver: ClinicModule.Resolvers = {
+const QueryResolver: StoreModule.Resolvers = {
   Mutation: {
-    createClinic(_, { clinicInput }, { injector }: GraphQLModules.Context) {
-      return injector.get(ClinicProvider).createClinic(clinicInput);
+    createStore(_, { storeInput }, { injector }: GraphQLModules.Context) {
+      return injector.get(StoreProvider).createStore(storeInput);
     },
-    updateClinic(_, { id, clinicInput }, { injector }: GraphQLModules.Context) {
-      return injector.get(ClinicProvider).updateClinic(id, clinicInput);
-    },
-    deleteClinic(_, { id }, { injector }: GraphQLModules.Context) {
-      return injector.get(ClinicProvider).deleteClinic(id);
+    updateStore(_, { id, storeInput }, { injector }: GraphQLModules.Context) {
+      return injector.get(StoreProvider).updateStore(id, storeInput);
     },
   },
 };

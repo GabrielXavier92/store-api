@@ -1,13 +1,13 @@
-import { ClinicProvider } from '../providers';
-import { ClinicModule } from '../types';
+import { StoreProvider } from '../providers';
+import { StoreModule } from '../types';
 
-const QueryResolver: ClinicModule.Resolvers = {
+const QueryResolver: StoreModule.Resolvers = {
   Query: {
-    clinic(_, { id }, { injector }: GraphQLModules.Context) {
-      return injector.get(ClinicProvider).getClinic(id);
+    store(_, { storeId }, { injector }: GraphQLModules.Context) {
+      return injector.get(StoreProvider).getStore(storeId);
     },
-    clinics(_, __, { injector }: GraphQLModules.Context) {
-      return injector.get(ClinicProvider).getClinics();
+    stores(_, __, { injector }: GraphQLModules.Context) {
+      return injector.get(StoreProvider).getStores();
     },
   },
 };
