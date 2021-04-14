@@ -1,12 +1,19 @@
 extend type Query {
   product(productId: ID!): Product!
   products(storeId: ID!): [Product!]!
+
+  category(categoryId: ID!): Category!
+  categorys(storeId: ID!): [Category!]!
 }
 
 extend type Mutation {
   createProduct(productInput: ProductInput!): Product!
   updateProduct(productId: ID!, productInput: ProductInput!): Product!
   deleteProduct(productId: ID!): Boolean
+
+  createCategory(categoryInput: CategoryInput!): Category!
+  updateCategory(categoryId: ID!, categoryInput: CategoryInput!): Category!
+  deleteCategory(categoryId: ID!): Boolean
 }
 
 type Product {
@@ -15,6 +22,7 @@ type Product {
   description: String!
   value: Float!
   weight: Float!
+  category: Category
 }
 
 input ProductInput {
@@ -24,4 +32,16 @@ input ProductInput {
   weight: Float!
   categoryId: ID!
   storeId: ID!
+}
+
+input CategoryInput {
+  storeId: ID!
+  name: String!
+  description: String
+}
+
+type Category {
+  id: ID!
+  name: String!
+  description: String
 }

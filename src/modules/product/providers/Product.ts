@@ -48,7 +48,7 @@ export class ProductProvider {
 
   async updateProduct(id: string, updatedStore: ProductModule.ProductInput): Promise<ProductModule.Product> {
     try {
-      const { description, name, value, weight } = updatedStore;
+      const { description, name, value, weight, categoryId } = updatedStore;
 
       return await this.context.prisma.product.update({
         where: { id },
@@ -57,6 +57,7 @@ export class ProductProvider {
           name,
           value,
           weight,
+          category: { connect: { id: categoryId } },
         },
       });
     } catch (e) {

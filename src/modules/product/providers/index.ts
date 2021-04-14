@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
-export { default as ProductProvider } from './Store';
+export { default as ProductProvider } from './Product';
+export { default as CategoryProvider } from './Category';

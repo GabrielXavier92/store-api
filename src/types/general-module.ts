@@ -16,13 +16,21 @@ export type Scalars = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  createCategory: Category;
   createProduct: Product;
   createStore: CreatedStore;
+  deleteCategory?: Maybe<Scalars['Boolean']>;
   deleteProduct?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<Auth>;
   signUp?: Maybe<Auth>;
+  updateCategory: Category;
   updateProduct: Product;
   updateStore: Store;
+};
+
+
+export type MutationCreateCategoryArgs = {
+  categoryInput: CategoryInput;
 };
 
 
@@ -33,6 +41,11 @@ export type MutationCreateProductArgs = {
 
 export type MutationCreateStoreArgs = {
   storeInput: StoreInput;
+};
+
+
+export type MutationDeleteCategoryArgs = {
+  categoryId: Scalars['ID'];
 };
 
 
@@ -48,6 +61,12 @@ export type MutationSignInArgs = {
 
 export type MutationSignUpArgs = {
   signUpInput: SignUpInput;
+};
+
+
+export type MutationUpdateCategoryArgs = {
+  categoryId: Scalars['ID'];
+  categoryInput: CategoryInput;
 };
 
 
@@ -79,10 +98,22 @@ export type SignUpInput = {
 
 export type Query = {
   __typename?: 'Query';
+  category: Category;
+  categorys: Array<Category>;
   product: Product;
   products: Array<Product>;
   store: Store;
   stores?: Maybe<Array<Maybe<Store>>>;
+};
+
+
+export type QueryCategoryArgs = {
+  categoryId: Scalars['ID'];
+};
+
+
+export type QueryCategorysArgs = {
+  storeId: Scalars['ID'];
 };
 
 
@@ -107,6 +138,7 @@ export type Product = {
   description: Scalars['String'];
   value: Scalars['Float'];
   weight: Scalars['Float'];
+  category?: Maybe<Category>;
 };
 
 export type ProductInput = {
@@ -116,6 +148,19 @@ export type ProductInput = {
   weight: Scalars['Float'];
   categoryId: Scalars['ID'];
   storeId: Scalars['ID'];
+};
+
+export type CategoryInput = {
+  storeId: Scalars['ID'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+};
+
+export type Category = {
+  __typename?: 'Category';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
 };
 
 export type CreatedStore = {
@@ -241,6 +286,8 @@ export type ResolversTypes = {
   Product: ResolverTypeWrapper<Product>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   ProductInput: ProductInput;
+  CategoryInput: CategoryInput;
+  Category: ResolverTypeWrapper<Category>;
   CreatedStore: ResolverTypeWrapper<CreatedStore>;
   Store: ResolverTypeWrapper<Store>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -260,6 +307,8 @@ export type ResolversParentTypes = {
   Product: Product;
   Float: Scalars['Float'];
   ProductInput: ProductInput;
+  CategoryInput: CategoryInput;
+  Category: Category;
   CreatedStore: CreatedStore;
   Store: Store;
   Int: Scalars['Int'];
@@ -267,11 +316,14 @@ export type ResolversParentTypes = {
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationCreateCategoryArgs, 'categoryInput'>>;
   createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'productInput'>>;
   createStore?: Resolver<ResolversTypes['CreatedStore'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'storeInput'>>;
+  deleteCategory?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCategoryArgs, 'categoryId'>>;
   deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
   signIn?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'signInInput'>>;
   signUp?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'signUpInput'>>;
+  updateCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationUpdateCategoryArgs, 'categoryId' | 'categoryInput'>>;
   updateProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationUpdateProductArgs, 'productId' | 'productInput'>>;
   updateStore?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<MutationUpdateStoreArgs, 'id' | 'storeInput'>>;
 };
@@ -282,6 +334,8 @@ export type AuthResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  category?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<QueryCategoryArgs, 'categoryId'>>;
+  categorys?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategorysArgs, 'storeId'>>;
   product?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<QueryProductArgs, 'productId'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, 'storeId'>>;
   store?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<QueryStoreArgs, 'storeId'>>;
@@ -294,6 +348,14 @@ export type ProductResolvers<ContextType = any, ParentType extends ResolversPare
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   weight?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  category?: Resolver<Maybe<ResolversTypes['Category']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type CategoryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Category'] = ResolversParentTypes['Category']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -323,6 +385,7 @@ export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
+  Category?: CategoryResolvers<ContextType>;
   CreatedStore?: CreatedStoreResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
 };

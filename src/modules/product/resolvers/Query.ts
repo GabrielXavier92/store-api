@@ -1,4 +1,4 @@
-import { ProductProvider } from '../providers';
+import { ProductProvider, CategoryProvider } from '../providers';
 import { ProductModule } from '../types';
 
 const QueryResolver: ProductModule.Resolvers = {
@@ -8,6 +8,12 @@ const QueryResolver: ProductModule.Resolvers = {
     },
     products(_, { storeId }, { injector }: GraphQLModules.Context) {
       return injector.get(ProductProvider).getProducts(storeId);
+    },
+    category(_, { categoryId }, { injector }: GraphQLModules.Context) {
+      return injector.get(CategoryProvider).getCategory(categoryId);
+    },
+    categorys(_, { storeId }, { injector }: GraphQLModules.Context) {
+      return injector.get(CategoryProvider).getCategorys(storeId);
     },
   },
 };
