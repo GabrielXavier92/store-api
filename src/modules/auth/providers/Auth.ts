@@ -12,7 +12,7 @@ export class AuthProvider {
   async createUser(data: AuthModule.SignUpInput): Promise<AuthModule.Auth> {
     const { email, password } = data;
 
-    const user = await this.context.prisma.user.findFirst({ where: { email } });
+    const user = await this.context.prisma.user.findUnique({ where: { email } });
     if (user) throw new UserInputError('Failed to create account');
 
     const hashPassword = await bcrypt.hash(password, 10);
@@ -32,7 +32,7 @@ export class AuthProvider {
 
   async logIn(data: AuthModule.SignInInput): Promise<AuthModule.Auth> {
     const { email, password } = data;
-    const user = await this.context.prisma.user.findFirst({ where: { email } });
+    const user = await this.context.prisma.user.findUnique({ where: { email } });
 
     if (!user || !(await bcrypt.compare(password, user.password))) throw new UserInputError('Failed to login');
 
@@ -45,13 +45,13 @@ export class AuthProvider {
 
   async generateToken(id: string): Promise<string> {
     // TODO CHANGE THIS METHOD
-    // const userClinics = await this.context.prisma.userOnClinic.findMany({
-    //   where: {
-    //     userId: id,
-    //   },
-    // });
+    const userStores = await this.context.prisma.userOnStore.findMany({
+      where: {
+        userId: id,
+      },
+    });
 
-    const token = jwt.sign({ id }, process.env.JWT_SECRET as string, {
+    const token = jwt.sign({ id, stores: userStores }, process.env.JWT_SECRET as string, {
       expiresIn: '7days',
     });
 

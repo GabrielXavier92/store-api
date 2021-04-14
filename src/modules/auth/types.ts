@@ -3,13 +3,13 @@ import * as Types from "../../types/general-module";
 import * as gm from "graphql-modules";
 export namespace AuthModule {
   interface DefinedFields {
-    Mutation: 'signIn' | 'signUp' | 'mongoTeste';
+    Mutation: 'signIn' | 'signUp';
     Auth: 'token';
   };
   
   interface DefinedInputFields {
     SignInInput: 'email' | 'password';
-    SignUpInput: 'fullName' | 'email' | 'password';
+    SignUpInput: 'email' | 'password';
   };
   
   export type Mutation = Pick<Types.Mutation, DefinedFields['Mutation']>;
@@ -33,7 +33,6 @@ export namespace AuthModule {
       '*'?: gm.Middleware[];
       signIn?: gm.Middleware[];
       signUp?: gm.Middleware[];
-      mongoTeste?: gm.Middleware[];
     };
     Auth?: {
       '*'?: gm.Middleware[];
