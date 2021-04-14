@@ -5,7 +5,6 @@ export {};
 
 export interface User {
   id: string;
-  clinics: Clinics[];
 }
 
 export interface Clinics {

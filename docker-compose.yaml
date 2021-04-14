@@ -12,6 +12,7 @@ services:
       - '4000:4000'
     depends_on:
       - postgres
+      - mongo
     networks:
       - default
   postgres:
@@ -24,8 +25,21 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - /home/gabrielxavier/Documents/personal/clinic/api/db:/var/lib/postgresql/data
+      - /home/gabrielxavier/Documents/personal/clinic/api/db:/postgres/var/lib/postgresql/data
     networks:
       - default
+  mongo:
+    container_name: 'MONGODB'
+    image: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - /home/gabrielxavier/Documents/personal/clinic/api/db:/mongo/data/db
+    networks:
+      - default
+
 networks:
   default:

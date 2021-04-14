@@ -3,6 +3,8 @@ import 'graphql-import-node';
 
 import { ApolloServer } from 'apollo-server';
 
+import ConnectMongoDB from './db/mongo';
+
 import application from './modules';
 import createContext from './context';
 
@@ -16,3 +18,5 @@ const server = new ApolloServer({
 server.listen().then(({ url }: any) => {
   console.log(`🚀 Server ready at ${url}`);
 });
+
+ConnectMongoDB();

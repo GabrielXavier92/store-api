@@ -1,0 +1,39 @@
+extend type Query {
+  store(id: ID!): Clinic!
+  stores: [Clinic]
+}
+
+extend type Mutation {
+  createStore(storeInput: StoreInput!): CreatedStore!
+  updateStore(id: ID!, storeInput: StoreInput!): Store!
+}
+
+type CreatedStore {
+  store: Store!
+  token: String!
+}
+
+type Store {
+  id: ID!
+  storeName: String!
+  zipCode: String!
+  country: String!
+  state: String!
+  city: String!
+  address: String!
+  number: Int!
+  complement: String
+  plan: String!
+}
+
+input StoreInput {
+  storeName: String!
+  zipCode: String!
+  country: String!
+  state: String!
+  city: String!
+  address: String!
+  number: Int!
+  complement: String
+  plan: String!
+}

@@ -1,17 +1,17 @@
 import { createModule } from 'graphql-modules';
 
 import middlewares from './middlewares';
-import resolvers from './resolvers';
 import * as types from './typedefs/types.graphql';
-import { SpecialtyProvider } from './providers';
+import resolvers from './resolvers';
+import { ClinicProvider } from './providers';
 
-const SpecialtyModule = createModule({
-  id: 'SpecialtyModule',
+const StoreModule = createModule({
+  id: 'StoreModule',
   dirname: __dirname,
   middlewares,
   typeDefs: [types],
   resolvers,
-  providers: [SpecialtyProvider],
+  providers: [ClinicProvider],
 });
 
-export default SpecialtyModule;
+export default StoreModule;

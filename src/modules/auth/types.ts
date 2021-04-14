@@ -3,7 +3,7 @@ import * as Types from "../../types/general-module";
 import * as gm from "graphql-modules";
 export namespace AuthModule {
   interface DefinedFields {
-    Mutation: 'signIn' | 'signUp';
+    Mutation: 'signIn' | 'signUp' | 'mongoTeste';
     Auth: 'token';
   };
   
@@ -33,6 +33,7 @@ export namespace AuthModule {
       '*'?: gm.Middleware[];
       signIn?: gm.Middleware[];
       signUp?: gm.Middleware[];
+      mongoTeste?: gm.Middleware[];
     };
     Auth?: {
       '*'?: gm.Middleware[];

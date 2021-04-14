@@ -44,13 +44,14 @@ export class AuthProvider {
   }
 
   async generateToken(id: string): Promise<string> {
-    const userClinics = await this.context.prisma.userOnClinic.findMany({
-      where: {
-        userId: id,
-      },
-    });
+    // TODO CHANGE THIS METHOD
+    // const userClinics = await this.context.prisma.userOnClinic.findMany({
+    //   where: {
+    //     userId: id,
+    //   },
+    // });
 
-    const token = jwt.sign({ id, clinics: userClinics }, process.env.JWT_SECRET as string, {
+    const token = jwt.sign({ id }, process.env.JWT_SECRET as string, {
       expiresIn: '7days',
     });
 

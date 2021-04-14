@@ -18,6 +18,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createClinic: CreatedClinic;
   deleteClinic?: Maybe<Scalars['Boolean']>;
+  mongoTeste?: Maybe<Scalars['Boolean']>;
   signIn?: Maybe<Auth>;
   signUp?: Maybe<Auth>;
   updateClinic: Clinic;
@@ -31,6 +32,11 @@ export type MutationCreateClinicArgs = {
 
 export type MutationDeleteClinicArgs = {
   id: Scalars['ID'];
+};
+
+
+export type MutationMongoTesteArgs = {
+  signUpInput: SignUpInput;
 };
 
 
@@ -247,6 +253,7 @@ export type ResolversParentTypes = {
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createClinic?: Resolver<ResolversTypes['CreatedClinic'], ParentType, ContextType, RequireFields<MutationCreateClinicArgs, 'clinicInput'>>;
   deleteClinic?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteClinicArgs, 'id'>>;
+  mongoTeste?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationMongoTesteArgs, 'signUpInput'>>;
   signIn?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignInArgs, 'signInInput'>>;
   signUp?: Resolver<Maybe<ResolversTypes['Auth']>, ParentType, ContextType, RequireFields<MutationSignUpArgs, 'signUpInput'>>;
   updateClinic?: Resolver<ResolversTypes['Clinic'], ParentType, ContextType, RequireFields<MutationUpdateClinicArgs, 'id' | 'clinicInput'>>;
