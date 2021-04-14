@@ -5,12 +5,13 @@ export {};
 
 export interface User {
   id: string;
+  stores: Store[];
 }
 
-export interface Clinics {
+export interface Store {
   role: string;
   userId: string;
-  clinicId: string;
+  storeId: string;
   createdAt: string;
   updatedAt: string;
 }
