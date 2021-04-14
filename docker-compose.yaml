@@ -2,7 +2,7 @@ version: '3'
 
 services:
   api:
-    container_name: 'API'
+    container_name: 'store-api'
     build:
       context: .
       dockerfile: Dockerfile.dev
@@ -16,7 +16,7 @@ services:
     networks:
       - default
   postgres:
-    container_name: 'POSTGRESS'
+    container_name: 'postgres-store'
     image: postgres:13.2
     environment:
       POSTGRES_DB: clinic
@@ -29,7 +29,7 @@ services:
     networks:
       - default
   mongo:
-    container_name: 'MONGODB'
+    container_name: 'mongo-store'
     image: mongo
     environment:
       MONGO_INITDB_ROOT_USERNAME: mongo
