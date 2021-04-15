@@ -1,0 +1,55 @@
+extend type Query {
+  purchase(purchaseId: ID!): Purchase!
+  purchases(storeId: ID!): [Purchase!]!
+}
+
+extend type Mutation {
+  createPurchase(purchaseInput: PurchaseInput!): Purchase!
+}
+
+type Purchase {
+  id: ID!
+  total: Float!
+  paymentForm: String!
+}
+
+input PurchaseInput {
+  products: [PurchaseProductInput!]!
+  total: Float!
+  paymentForm: String!
+  store: PurchaseStoreInput!
+  buyerData: PurchaseBuyerDataInput
+}
+
+input PurchaseProductInput {
+  id: ID!
+  name: String!
+  description: String!
+  value: Float!
+  quantity: Float!
+}
+
+input PurchaseStoreInput {
+  id: ID!
+  storeName: String!
+  displayName: String!
+  zipCode: String!
+  country: String!
+  state: String!
+  city: String!
+  address: String!
+  number: Int!
+  complement: String
+}
+
+input PurchaseBuyerDataInput {
+  name: String!
+  celphone: String!
+  zipCode: String!
+  country: String!
+  state: String!
+  city: String!
+  address: String!
+  number: Int!
+  complement: String
+}

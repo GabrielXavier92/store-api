@@ -18,6 +18,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   createCategory: Category;
   createProduct: Product;
+  createPurchase: Purchase;
   createStore: CreatedStore;
   deleteCategory?: Maybe<Scalars['Boolean']>;
   deleteProduct?: Maybe<Scalars['Boolean']>;
@@ -36,6 +37,11 @@ export type MutationCreateCategoryArgs = {
 
 export type MutationCreateProductArgs = {
   productInput: ProductInput;
+};
+
+
+export type MutationCreatePurchaseArgs = {
+  purchaseInput: PurchaseInput;
 };
 
 
@@ -102,6 +108,8 @@ export type Query = {
   categorys: Array<Category>;
   product: Product;
   products: Array<Product>;
+  purchase: Purchase;
+  purchases: Array<Purchase>;
   store: Store;
   stores?: Maybe<Array<Maybe<Store>>>;
 };
@@ -123,6 +131,16 @@ export type QueryProductArgs = {
 
 
 export type QueryProductsArgs = {
+  storeId: Scalars['ID'];
+};
+
+
+export type QueryPurchaseArgs = {
+  purchaseId: Scalars['ID'];
+};
+
+
+export type QueryPurchasesArgs = {
   storeId: Scalars['ID'];
 };
 
@@ -161,6 +179,54 @@ export type Category = {
   id: Scalars['ID'];
   name: Scalars['String'];
   description?: Maybe<Scalars['String']>;
+};
+
+export type Purchase = {
+  __typename?: 'Purchase';
+  id: Scalars['ID'];
+  total: Scalars['Float'];
+  paymentForm: Scalars['String'];
+};
+
+export type PurchaseInput = {
+  products: Array<PurchaseProductInput>;
+  total: Scalars['Float'];
+  paymentForm: Scalars['String'];
+  store: PurchaseStoreInput;
+  buyerData?: Maybe<PurchaseBuyerDataInput>;
+};
+
+export type PurchaseProductInput = {
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  description: Scalars['String'];
+  value: Scalars['Float'];
+  quantity: Scalars['Float'];
+};
+
+export type PurchaseStoreInput = {
+  id: Scalars['ID'];
+  storeName: Scalars['String'];
+  displayName: Scalars['String'];
+  zipCode: Scalars['String'];
+  country: Scalars['String'];
+  state: Scalars['String'];
+  city: Scalars['String'];
+  address: Scalars['String'];
+  number: Scalars['Int'];
+  complement?: Maybe<Scalars['String']>;
+};
+
+export type PurchaseBuyerDataInput = {
+  name: Scalars['String'];
+  celphone: Scalars['String'];
+  zipCode: Scalars['String'];
+  country: Scalars['String'];
+  state: Scalars['String'];
+  city: Scalars['String'];
+  address: Scalars['String'];
+  number: Scalars['Int'];
+  complement?: Maybe<Scalars['String']>;
 };
 
 export type CreatedStore = {
@@ -288,9 +354,14 @@ export type ResolversTypes = {
   ProductInput: ProductInput;
   CategoryInput: CategoryInput;
   Category: ResolverTypeWrapper<Category>;
+  Purchase: ResolverTypeWrapper<Purchase>;
+  PurchaseInput: PurchaseInput;
+  PurchaseProductInput: PurchaseProductInput;
+  PurchaseStoreInput: PurchaseStoreInput;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  PurchaseBuyerDataInput: PurchaseBuyerDataInput;
   CreatedStore: ResolverTypeWrapper<CreatedStore>;
   Store: ResolverTypeWrapper<Store>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
   StoreInput: StoreInput;
 };
 
@@ -309,15 +380,21 @@ export type ResolversParentTypes = {
   ProductInput: ProductInput;
   CategoryInput: CategoryInput;
   Category: Category;
+  Purchase: Purchase;
+  PurchaseInput: PurchaseInput;
+  PurchaseProductInput: PurchaseProductInput;
+  PurchaseStoreInput: PurchaseStoreInput;
+  Int: Scalars['Int'];
+  PurchaseBuyerDataInput: PurchaseBuyerDataInput;
   CreatedStore: CreatedStore;
   Store: Store;
-  Int: Scalars['Int'];
   StoreInput: StoreInput;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   createCategory?: Resolver<ResolversTypes['Category'], ParentType, ContextType, RequireFields<MutationCreateCategoryArgs, 'categoryInput'>>;
   createProduct?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<MutationCreateProductArgs, 'productInput'>>;
+  createPurchase?: Resolver<ResolversTypes['Purchase'], ParentType, ContextType, RequireFields<MutationCreatePurchaseArgs, 'purchaseInput'>>;
   createStore?: Resolver<ResolversTypes['CreatedStore'], ParentType, ContextType, RequireFields<MutationCreateStoreArgs, 'storeInput'>>;
   deleteCategory?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteCategoryArgs, 'categoryId'>>;
   deleteProduct?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType, RequireFields<MutationDeleteProductArgs, 'productId'>>;
@@ -338,6 +415,8 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   categorys?: Resolver<Array<ResolversTypes['Category']>, ParentType, ContextType, RequireFields<QueryCategorysArgs, 'storeId'>>;
   product?: Resolver<ResolversTypes['Product'], ParentType, ContextType, RequireFields<QueryProductArgs, 'productId'>>;
   products?: Resolver<Array<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductsArgs, 'storeId'>>;
+  purchase?: Resolver<ResolversTypes['Purchase'], ParentType, ContextType, RequireFields<QueryPurchaseArgs, 'purchaseId'>>;
+  purchases?: Resolver<Array<ResolversTypes['Purchase']>, ParentType, ContextType, RequireFields<QueryPurchasesArgs, 'storeId'>>;
   store?: Resolver<ResolversTypes['Store'], ParentType, ContextType, RequireFields<QueryStoreArgs, 'storeId'>>;
   stores?: Resolver<Maybe<Array<Maybe<ResolversTypes['Store']>>>, ParentType, ContextType>;
 };
@@ -356,6 +435,13 @@ export type CategoryResolvers<ContextType = any, ParentType extends ResolversPar
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type PurchaseResolvers<ContextType = any, ParentType extends ResolversParentTypes['Purchase'] = ResolversParentTypes['Purchase']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  total?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  paymentForm?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -386,6 +472,7 @@ export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
   Product?: ProductResolvers<ContextType>;
   Category?: CategoryResolvers<ContextType>;
+  Purchase?: PurchaseResolvers<ContextType>;
   CreatedStore?: CreatedStoreResolvers<ContextType>;
   Store?: StoreResolvers<ContextType>;
 };
